@@ -1,0 +1,32 @@
+<!doctype html>
+<!-- INDEX: 01 Document | 02 Header | 03 Occasion and poses | 04 Camera | 05 Photo | 06 Scripts -->
+<html lang="ar" dir="rtl">
+<!-- 01 START: Document -->
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#14262b"><title>وقفة | اختاري وضعيتك</title><link rel="stylesheet" href="css/style.css"></head>
+<body><div class="app">
+<!-- 02 START: Header -->
+<header><a class="brand" href="./"><span class="brand-icon">◉</span> وقفة <small>WAQFA</small></a><span class="tag">دليلك للصورة القادمة</span><button id="helpButton" class="quiet" aria-expanded="false" aria-controls="help">كيف أستخدمه؟</button></header>
+<aside id="help" hidden>اختاري المناسبة ثم صورة الوضعية. شغّلي الكاميرا، وسيظهر محيط أبيض مطابق للصورة المختارة. حرّكي الدليل بالسحب واضبطي حجمه، ثم قفي داخله والتقطي الصورة. المساعدة الذكية اختيارية وتعمل على جهازك. الصور المرجعية مولّدة بالذكاء الاصطناعي، والمشروع مستقل وغير تابع لشركة هواتف.</aside>
+<div class="intro"><div><p class="eyebrow">كل مناسبة، لها وقفتها</p><h1>اختاري صورتك.<br><em>خذي مكانك داخل الخط.</em></h1></div><p>وضعيات واقعية تلهمك،<br>ومحيط أبيض يرشدك أثناء التصوير.</p></div>
+<!-- 02 END: Header -->
+<main>
+<!-- 03 START: Pose selection; child of main -->
+<aside class="pose-panel"><p class="eyebrow">01 / مناسبة التصوير</p><div id="categories" class="categories" aria-label="مناسبة التصوير"></div><div class="section-label"><h2>اختاري وقفتك</h2><span class="mini">صور مرجعية مولّدة بالذكاء الاصطناعي</span></div><div id="poseList" class="pose-list"></div><div class="reference"><div class="reference-image"><img id="referenceImage" alt="الوضعية المختارة"><span class="reference-badge">الوضعية المختارة</span></div><div class="reference-text"><h3 id="poseTitle"></h3><p id="poseDescription"></p></div></div><div class="privacy"><span>◈</span><p><b>صورتك تبقى لك</b><br>لا نرفع صورك ولا نسجّل الفيديو. المناسبة تختارينها بنفسك.</p></div></aside>
+<!-- 03 END: Pose selection -->
+<!-- 04 START: Camera workspace; sibling of pose panel -->
+<section class="camera-panel" aria-label="الكاميرا ودليل الوضعية"><div class="panel-top"><span><i id="liveDot"></i> <span id="cameraState">الكاميرا متوقفة</span></span><label class="mini">الكاميرا <select id="cameraSelect"><option value="user">الأمامية</option><option value="environment">الخلفية</option></select></label></div>
+<div class="stage" id="stage"><video id="video" autoplay playsinline muted></video><canvas id="guideCanvas" aria-label="محيط أبيض للوضعية المختارة، يمكن سحبه لتغيير موضعه"></canvas><div class="grid" aria-hidden="true"></div><div id="placeholder"><div class="camera-symbol">◎</div><h2>مكانك داخل الصورة</h2><p>شغّلي الكاميرا لإظهار دليل الوضعية</p></div><span class="stage-label" id="stageLabel">اسحبي الدليل لتغيير مكانه</span><div id="countdown" hidden></div></div>
+<div class="guide-tools"><div class="tools-title"><strong>دليل الوضعية</strong><label><input type="checkbox" id="showGuide" checked> إظهار الخط الأبيض</label></div><div class="sliders"><label>الحجم <input id="guideScale" type="range" min="45" max="110" value="88"><output id="scaleValue">88٪</output></label><label>وضوح الخط <input id="guideOpacity" type="range" min="20" max="100" value="90"><output id="opacityValue">90٪</output></label></div><div class="guide-actions"><button id="flipGuide" class="quiet" aria-pressed="false">عكس الوضعية ↔</button><button id="resetGuide" class="quiet">توسيط الدليل</button><details><summary>تحريك دقيق</summary><div class="sliders"><label>أفقيًا <input id="guideX" aria-label="موضع الدليل الأفقي" type="range" min="-35" max="35" value="0"></label><label>رأسيًا <input id="guideY" aria-label="موضع الدليل الرأسي" type="range" min="-35" max="35" value="0"></label></div></details></div></div>
+<div class="guidance" role="status" aria-live="polite"><span class="spark">✦</span><div><small>إرشادك الآن</small><strong id="hint">اختاري وضعية ثم شغّلي الكاميرا</strong></div></div>
+<div class="ai-row"><label><input id="aiAssist" type="checkbox"> تفعيل المساعدة الذكية</label><span id="aiState" class="mini">اختياري · تحليل على جهازك</span></div><div id="matchPanel" hidden><div class="meter-row"><span id="matchLabel">تقارب الجسم مع الدليل — تقديري</span><b id="score">—</b></div><progress id="progress" max="100" value="0" aria-labelledby="matchLabel"></progress><label class="auto-label"><input id="autoCapture" type="checkbox"> التقاط تلقائي بعد تطابق مستمر لمدة ٣ ثوانٍ</label></div>
+<div class="controls"><button id="start" class="primary">تشغيل الكاميرا</button><button id="capture" disabled>التقاط الصورة</button><label class="timer-label">المؤقت <select id="timer"><option value="0">بدون</option><option value="3">٣ ثوانٍ</option><option value="5">٥ ثوانٍ</option><option value="10">١٠ ثوانٍ</option></select></label><button id="stop" class="quiet" disabled>إيقاف</button></div><p class="capture-note">الصورة المحفوظة بدون الخطوط أو الإرشادات.</p><p id="error" class="error" role="alert" hidden></p></section>
+<!-- 04 END: Camera workspace -->
+</main>
+<!-- 05 START: Captured photo -->
+<section id="photoPanel" class="photo-panel" hidden><div><p class="eyebrow">صورتك جاهزة</p><h2>هذه اللحظة، لك.</h2><a id="download" class="primary button" download="waqfa-photo.jpg">تنزيل الصورة</a><button id="deletePhoto" class="quiet">حذف المعاينة</button></div><img id="photo" alt="الصورة الملتقطة"></section>
+<footer><span>وقفة — نموذج جامعي مستقل · الإصدار ٢</span><span>اختيار المناسبة يدوي. التقييم يقيس التقارب، وليس جمال الصورة.</span></footer>
+<!-- 05 END: Captured photo -->
+</div>
+<!-- 06 START: Scripts --><script type="module" src="js/app.js"></script><!-- 06 END: Scripts -->
+</body></html>
+<!-- 01 END: Document -->
